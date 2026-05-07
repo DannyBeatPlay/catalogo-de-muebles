@@ -28,7 +28,6 @@
       min-height: 100vh;
     }
 
-    /* HERO */
     .hero {
       background: var(--bg);
       text-align: center;
@@ -82,7 +81,6 @@
       gap: 5px;
     }
 
-    /* FILTROS */
     .filters-wrap {
       background: var(--bg);
       border-bottom: 1px solid var(--border);
@@ -110,7 +108,6 @@
     .filter-btn:hover { border-color: var(--text2); color: var(--text); }
     .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-    /* GRID */
     .section-label {
       font-size: 11px;
       text-transform: uppercase;
@@ -177,10 +174,12 @@
       font-weight: 500;
     }
 
-    .badge-5c   { background: #E1F5EE; color: #0F6E56; }
-    .badge-9c   { background: #EEEDFE; color: #3C3489; }
+    .badge-5c    { background: #E1F5EE; color: #0F6E56; }
+    .badge-9c    { background: #EEEDFE; color: #3C3489; }
     .badge-torre { background: #FAECE7; color: #993C1D; }
-    .badge-perf { background: #FAEEDA; color: #854F0B; }
+    .badge-perf  { background: #FAEEDA; color: #854F0B; }
+    .badge-add   { background: #E6F1FB; color: #185FA5; }
+    .badge-puff  { background: #FBEAF0; color: #993556; }
 
     .product-info { padding: 14px; }
 
@@ -226,7 +225,32 @@
     .wa-btn:hover { background: #1ebe5d; }
     .wa-btn svg { width: 14px; height: 14px; }
 
-    /* CTA */
+    .puff-banner {
+      margin: 0 1.5rem 1.5rem;
+      padding: 1.25rem 1.5rem;
+      border: 1px dashed #D4537E;
+      border-radius: var(--radius);
+      background: #FBEAF0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .puff-banner-icon { font-size: 32px; flex-shrink: 0; }
+
+    .puff-banner-text h4 {
+      font-size: 14px;
+      font-weight: 500;
+      color: #72243E;
+      margin-bottom: 3px;
+    }
+
+    .puff-banner-text p {
+      font-size: 12px;
+      color: #993556;
+    }
+
     .cta-section {
       margin: 0 1.5rem 2rem;
       padding: 2rem 1.5rem;
@@ -267,7 +291,6 @@
     .wa-btn-main:hover { background: #1ebe5d; }
     .wa-btn-main svg { width: 20px; height: 20px; }
 
-    /* FOOTER */
     footer {
       text-align: center;
       padding: 1.5rem;
@@ -277,13 +300,13 @@
       background: var(--bg);
     }
 
-    /* RESPONSIVE */
     @media (max-width: 480px) {
       .hero h1 { font-size: 26px; }
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 1rem 2rem; }
       .filters-wrap { padding: 0.75rem 1rem; }
       .section-label { padding: 1.25rem 1rem 0.5rem; }
       .cta-section { margin: 0 1rem 2rem; }
+      .puff-banner { margin: 0 1rem 1.5rem; }
     }
   </style>
 </head>
@@ -292,7 +315,7 @@
   <div class="hero">
     <span class="hero-badge">Bogotá, Colombia</span>
     <h1>Tocadores Hollywood</h1>
-    <p>13 referencias disponibles &nbsp;·&nbsp; Envío gratis a Bogotá &nbsp;·&nbsp; Puff de obsequio</p>
+    <p>21 referencias disponibles &nbsp;·&nbsp; Envío gratis a Bogotá &nbsp;·&nbsp; Puff de obsequio</p>
     <div class="hero-pills">
       <span class="pill">
         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -310,10 +333,20 @@
     <button class="filter-btn" onclick="filter('9cajones', this)">9 cajones</button>
     <button class="filter-btn" onclick="filter('torre', this)">Torre</button>
     <button class="filter-btn" onclick="filter('perfumero', this)">Perfumero</button>
+    <button class="filter-btn" onclick="filter('adicional', this)">Adicionales</button>
+    <button class="filter-btn" onclick="filter('puff', this)">🎁 Puffs gratis</button>
   </div>
 
   <p class="section-label">Referencias disponibles</p>
   <div class="products-grid" id="grid"></div>
+
+  <div class="puff-banner">
+    <div class="puff-banner-icon">🎁</div>
+    <div class="puff-banner-text">
+      <h4>Puff gratis con tu tocador Hollywood</h4>
+      <p>Con cada compra llevas tu puff a escoger: tipo peluche o zapatero. Pregúntame al pedir.</p>
+    </div>
+  </div>
 
   <div class="cta-section">
     <h3>¿Tienes alguna duda?</h3>
@@ -333,27 +366,37 @@
     const WA = '573205660764';
 
     const products = [
-      { id:1,  name:'Hollywood 5 cajones standard',                    desc:'Espejo con luces, diseño clásico y elegante',              cat:'5cajones', price:'$459.999', badge:'5c',    img:'img/hw5-standard.jpg' },
-      { id:2,  name:'Hollywood 5 cajones marco corredizo',             desc:'Marco deslizable, mayor profundidad de espejo',             cat:'5cajones', price:'$539.999', badge:'5c',    img:'img/hw5-corredizo.jpg' },
-      { id:3,  name:'Hollywood 5 cajones touch (sandblasting)',        desc:'Espejo con acabado satinado exclusivo',                     cat:'5cajones', price:'$619.999', badge:'5c',    img:'img/hw5-touch.jpg' },
-      { id:4,  name:'Hollywood 5 cajones con repisa lateral',          desc:'Repisa extra para mayor organización',                      cat:'5cajones', price:'$499.999', badge:'5c',    img:'img/hw5-repisa.jpg' },
-      { id:5,  name:'Hollywood 5 cajones marco especial',              desc:'Disponible: Hello Kitty, circular o corazón',               cat:'5cajones', price:'$489.999', badge:'5c',    img:'img/hw5-especial.jpg' },
-      { id:6,  name:'Hollywood 9 cajones standard',                    desc:'Mayor capacidad, espejo amplio con luces',                  cat:'9cajones', price:'$559.999', badge:'9c',    img:'img/hw9-standard.jpg' },
-      { id:7,  name:'Hollywood 9 cajones touch (sandblasting)',        desc:'Acabado satinado premium, 9 cajones amplios',               cat:'9cajones', price:'$719.999', badge:'9c',    img:'img/hw9-touch.jpg' },
-      { id:8,  name:'Hollywood 9 cajones con dos repisas',             desc:'Máximo espacio de almacenamiento',                          cat:'9cajones', price:'$639.999', badge:'9c',    img:'img/hw9-repisas.jpg' },
-      { id:9,  name:'Hollywood 9 cajones corredizo con entrepaños',    desc:'Marco corredizo, entrepaños internos y repisa lateral',     cat:'9cajones', price:'$719.999', badge:'9c',    img:'img/hw9-completo.jpg' },
-      { id:10, name:'Torre standard',                                   desc:'Diseño vertical, ideal para espacios reducidos',            cat:'torre',    price:'$579.999', badge:'torre',  img:'img/torre-standard.jpg' },
-      { id:11, name:'Torre touch (sandblasting)',                       desc:'Torre con espejo biselado satinado premium',                cat:'torre',    price:'$749.999', badge:'torre',  img:'img/torre-touch.jpg' },
-      { id:12, name:'Perfumero',                                        desc:'Organizador elegante para perfumes y accesorios',           cat:'perfumero', price:'$379.999', badge:'perf', img:'img/perfumero.jpg' },
-      { id:13, name:'Perfumero con luces',                              desc:'Perfumero iluminado, presentación de lujo',                 cat:'perfumero', price:'$449.999', badge:'perf', img:'img/perfumero-luces.jpg' },
+      { id:1,  name:'Hollywood 5 cajones standard',                     desc:'Espejo con luces, diseño clásico y elegante',               cat:'5cajones',  price:'$459.999',          badge:'5c',    img:'img/hw5-standard.jpg' },
+      { id:2,  name:'Hollywood 5 cajones marco corredizo',              desc:'Marco deslizable, mayor profundidad de espejo',              cat:'5cajones',  price:'$539.999',          badge:'5c',    img:'img/hw5-corredizo.jpg' },
+      { id:3,  name:'Hollywood 5 cajones touch (sandblasting)',         desc:'Espejo con acabado satinado exclusivo',                      cat:'5cajones',  price:'$619.999',          badge:'5c',    img:'img/hw5-touch.jpg' },
+      { id:4,  name:'Hollywood 5 cajones con repisa lateral',           desc:'Repisa extra para mayor organización',                       cat:'5cajones',  price:'$499.999',          badge:'5c',    img:'img/hw5-repisa.jpg' },
+      { id:5,  name:'Hollywood 5 cajones marco especial',               desc:'Disponible: Hello Kitty, circular o corazón',                cat:'5cajones',  price:'$489.999',          badge:'5c',    img:'img/hw5-especial.jpg' },
+      { id:14, name:'Hollywood mini 1 cajón',                           desc:'Modelo compacto ideal para espacios pequeños',               cat:'5cajones',  price:'$359.999',          badge:'5c',    img:'img/hw-mini1.jpg' },
+      { id:15, name:'Hollywood mini 4 cajones',                         desc:'Compacto con mayor capacidad de almacenamiento',             cat:'5cajones',  price:'$399.999',          badge:'5c',    img:'img/hw-mini4.jpg' },
+      { id:16, name:'Hollywood 5 cajones iluminación incrustada',       desc:'Espejo con iluminación integrada en el marco',               cat:'5cajones',  price:'$629.999',          badge:'5c',    img:'img/hw5-iluminacion.jpg' },
+      { id:6,  name:'Hollywood 9 cajones standard',                     desc:'Mayor capacidad, espejo amplio con luces',                   cat:'9cajones',  price:'$559.999',          badge:'9c',    img:'img/hw9-standard.jpg' },
+      { id:7,  name:'Hollywood 9 cajones touch (sandblasting)',         desc:'Acabado satinado premium, 9 cajones amplios',                cat:'9cajones',  price:'$719.999',          badge:'9c',    img:'img/hw9-touch.jpg' },
+      { id:8,  name:'Hollywood 9 cajones con dos repisas',              desc:'Máximo espacio de almacenamiento',                           cat:'9cajones',  price:'$639.999',          badge:'9c',    img:'img/hw9-repisas.jpg' },
+      { id:9,  name:'Hollywood 9 cajones corredizo con entrepaños',     desc:'Marco corredizo, entrepaños internos y repisa lateral',      cat:'9cajones',  price:'$719.999',          badge:'9c',    img:'img/hw9-completo.jpg' },
+      { id:17, name:'Hollywood 9 cajones iluminación incrustada',       desc:'Espejo con iluminación integrada en el marco',               cat:'9cajones',  price:'$729.999',          badge:'9c',    img:'img/hw9-iluminacion.jpg' },
+      { id:10, name:'Torre standard',                                    desc:'Diseño vertical, ideal para espacios reducidos',             cat:'torre',     price:'$579.999',          badge:'torre', img:'img/torre-standard.jpg' },
+      { id:11, name:'Torre touch (sandblasting)',                        desc:'Torre con espejo biselado satinado premium',                 cat:'torre',     price:'$749.999',          badge:'torre', img:'img/torre-touch.jpg' },
+      { id:12, name:'Perfumero',                                         desc:'Organizador elegante para perfumes y accesorios',            cat:'perfumero', price:'$379.999',          badge:'perf',  img:'img/perfumero.jpg' },
+      { id:13, name:'Perfumero con luces',                               desc:'Perfumero iluminado, presentación de lujo',                  cat:'perfumero', price:'$449.999',          badge:'perf',  img:'img/perfumero-luces.jpg' },
+      { id:18, name:'Repisa de piso 30cm×30cm×170mt',                       desc:'Repisa vertical elegante para organizar tu espacio',         cat:'adicional', price:'$189.999',          badge:'add',   img:'img/repisa-piso.jpg' },
+      { id:19, name:'Mesitas de noche',                                  desc:'Par de mesitas a juego con tus tocadores',                   cat:'adicional', price:'$219.999 el par',   badge:'add',   img:'img/mesitas-noche.jpg' },
+      { id:20, name:'Puff tipo peluche',                                 desc:'Suave y esponjoso, va perfecto con tu tocador',              cat:'puff',      price:'Gratis con compra', badge:'puff',  img:'img/puff-peluche.jpg' },
+      { id:21, name:'Puff zapatero',                                     desc:'Práctico y elegante, ideal para tu rincón de maquillaje',    cat:'puff',      price:'Gratis con compra', badge:'puff',  img:'img/puff-zapatero.jpg' },
     ];
 
-    const badgeLabels = { '5c':'5 cajones', '9c':'9 cajones', 'torre':'Torre', 'perf':'Perfumero' };
+    const badgeLabels = { '5c':'5 cajones', '9c':'9 cajones', 'torre':'Torre', 'perf':'Perfumero', 'add':'Adicional', 'puff':'Regalo' };
 
     const waIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L.057 23.882l6.19-1.624A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.36-.213-3.676.964.981-3.585-.234-.369A9.818 9.818 0 0 1 12 2.182c5.424 0 9.818 4.394 9.818 9.818s-4.394 9.818-9.818 9.818z"/></svg>`;
 
     function waLink(p) {
-      const msg = encodeURIComponent(`Hola Edison, vi tu catálogo y me interesa el ${p.name} (${p.price}). ¿Está disponible?`);
+      const msg = p.cat === 'puff'
+        ? encodeURIComponent(`Hola Edison, vi tu catálogo y quisiera saber más sobre el puff de regalo con mi compra.`)
+        : encodeURIComponent(`Hola Edison, vi tu catálogo y me interesa el ${p.name} (${p.price}). ¿Está disponible?`);
       return `https://wa.me/${WA}?text=${msg}`;
     }
 
@@ -376,7 +419,7 @@
             <p class="product-desc">${p.desc}</p>
             <div class="product-footer">
               <span class="product-price">${p.price}</span>
-              <a class="wa-btn" href="${waLink(p)}" target="_blank">${waIcon} Pedir</a>
+              <a class="wa-btn" href="${waLink(p)}" target="_blank">${waIcon} ${p.cat === 'puff' ? 'Info' : 'Pedir'}</a>
             </div>
           </div>
         </div>
