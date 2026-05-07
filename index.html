@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tocadores Hollywood | Edison Sanabria · Bogotá</title>
+  <meta name="description" content="Catálogo de tocadores Hollywood en Bogotá. Envío gratis, puff de obsequio. Vendedor verificado con 5 estrellas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg2: #f7f6f3;
+      --text: #1a1a1a;
+      --text2: #6b6b6b;
+      --border: rgba(0,0,0,0.1);
+      --border2: rgba(0,0,0,0.2);
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg2);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--bg);
+      text-align: center;
+      padding: 3rem 1.5rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text2);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      padding: 4px 14px;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: var(--text2);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: var(--bg2);
+      color: var(--text2);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* FILTROS */
+    .filters-wrap {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .filter-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      padding: 6px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { border-color: var(--text2); color: var(--text); }
+    .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    /* GRID */
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text2);
+      padding: 1.5rem 1.5rem 0.75rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      padding: 0 1.5rem 2rem;
+    }
+
+    .product-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--bg2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--border2);
+    }
+
+    .placeholder svg { width: 48px; height: 48px; }
+    .placeholder span { font-size: 11px; }
+
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+
+    .badge-5c   { background: #E1F5EE; color: #0F6E56; }
+    .badge-9c   { background: #EEEDFE; color: #3C3489; }
+    .badge-torre { background: #FAECE7; color: #993C1D; }
+    .badge-perf { background: #FAEEDA; color: #854F0B; }
+
+    .product-info { padding: 14px; }
+
+    .product-name {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      line-height: 1.35;
+    }
+
+    .product-desc {
+      font-size: 11px;
+      color: var(--text2);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .product-price { font-size: 14px; font-weight: 500; }
+
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.15s;
+    }
+
+    .wa-btn:hover { background: #1ebe5d; }
+    .wa-btn svg { width: 14px; height: 14px; }
+
+    /* CTA */
+    .cta-section {
+      margin: 0 1.5rem 2rem;
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+      background: var(--bg);
+    }
+
+    .cta-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-section p {
+      font-size: 14px;
+      color: var(--text2);
+      margin-bottom: 1.25rem;
+    }
+
+    .wa-btn-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 12px 28px;
+      border-radius: 28px;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.15s;
+    }
+
+    .wa-btn-main:hover { background: #1ebe5d; }
+    .wa-btn-main svg { width: 20px; height: 20px; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 12px;
+      color: var(--text2);
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 26px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 1rem 2rem; }
+      .filters-wrap { padding: 0.75rem 1rem; }
+      .section-label { padding: 1.25rem 1rem 0.5rem; }
+      .cta-section { margin: 0 1rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <span class="hero-badge">Bogotá, Colombia</span>
+    <h1>Tocadores Hollywood</h1>
+    <p>13 referencias disponibles &nbsp;·&nbsp; Envío gratis a Bogotá &nbsp;·&nbsp; Puff de obsequio</p>
+    <div class="hero-pills">
+      <span class="pill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        Envío gratis
+      </span>
+      <span class="pill">🎁 Puff de regalo</span>
+      <span class="pill">⭐ 5.0 · 19 reseñas</span>
+      <span class="pill">✅ Vendedor verificado</span>
+    </div>
+  </div>
+
+  <div class="filters-wrap">
+    <button class="filter-btn active" onclick="filter('todos', this)">Todos</button>
+    <button class="filter-btn" onclick="filter('5cajones', this)">5 cajones</button>
+    <button class="filter-btn" onclick="filter('9cajones', this)">9 cajones</button>
+    <button class="filter-btn" onclick="filter('torre', this)">Torre</button>
+    <button class="filter-btn" onclick="filter('perfumero', this)">Perfumero</button>
+  </div>
+
+  <p class="section-label">Referencias disponibles</p>
+  <div class="products-grid" id="grid"></div>
+
+  <div class="cta-section">
+    <h3>¿Tienes alguna duda?</h3>
+    <p>Escríbeme y te asesoro con el modelo ideal para tu espacio</p>
+    <a class="wa-btn-main" href="https://wa.me/573205660764?text=Hola%20Edison%2C%20vi%20tu%20cat%C3%A1logo%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20tocadores%20Hollywood" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L.057 23.882l6.19-1.624A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.36-.213-3.676.964.981-3.585-.234-.369A9.818 9.818 0 0 1 12 2.182c5.424 0 9.818 4.394 9.818 9.818s-4.394 9.818-9.818 9.818z"/></svg>
+      Chatear por WhatsApp
+    </a>
+  </div>
+
+  <footer>
+    Edison Danilo Sanabria Riano &nbsp;·&nbsp; Bogotá, Colombia &nbsp;·&nbsp;
+    <a href="https://wa.me/573205660764" style="color: #25D366; text-decoration: none;">WhatsApp</a>
+  </footer>
+
+  <script>
+    const WA = '573205660764';
+
+    const products = [
+      { id:1,  name:'Hollywood 5 cajones standard',                    desc:'Espejo con luces, diseño clásico y elegante',              cat:'5cajones', price:'$459.999', badge:'5c',    img:'img/hw5-standard.jpg' },
+      { id:2,  name:'Hollywood 5 cajones marco corredizo',             desc:'Marco deslizable, mayor profundidad de espejo',             cat:'5cajones', price:'$539.999', badge:'5c',    img:'img/hw5-corredizo.jpg' },
+      { id:3,  name:'Hollywood 5 cajones touch (sandblasting)',        desc:'Espejo con acabado satinado exclusivo',                     cat:'5cajones', price:'$619.999', badge:'5c',    img:'img/hw5-touch.jpg' },
+      { id:4,  name:'Hollywood 5 cajones con repisa lateral',          desc:'Repisa extra para mayor organización',                      cat:'5cajones', price:'$499.999', badge:'5c',    img:'img/hw5-repisa.jpg' },
+      { id:5,  name:'Hollywood 5 cajones marco especial',              desc:'Disponible: Hello Kitty, circular o corazón',               cat:'5cajones', price:'$489.999', badge:'5c',    img:'img/hw5-especial.jpg' },
+      { id:6,  name:'Hollywood 9 cajones standard',                    desc:'Mayor capacidad, espejo amplio con luces',                  cat:'9cajones', price:'$559.999', badge:'9c',    img:'img/hw9-standard.jpg' },
+      { id:7,  name:'Hollywood 9 cajones touch (sandblasting)',        desc:'Acabado satinado premium, 9 cajones amplios',               cat:'9cajones', price:'$719.999', badge:'9c',    img:'img/hw9-touch.jpg' },
+      { id:8,  name:'Hollywood 9 cajones con dos repisas',             desc:'Máximo espacio de almacenamiento',                          cat:'9cajones', price:'$639.999', badge:'9c',    img:'img/hw9-repisas.jpg' },
+      { id:9,  name:'Hollywood 9 cajones corredizo con entrepaños',    desc:'Marco corredizo, entrepaños internos y repisa lateral',     cat:'9cajones', price:'$719.999', badge:'9c',    img:'img/hw9-completo.jpg' },
+      { id:10, name:'Torre standard',                                   desc:'Diseño vertical, ideal para espacios reducidos',            cat:'torre',    price:'$579.999', badge:'torre',  img:'img/torre-standard.jpg' },
+      { id:11, name:'Torre touch (sandblasting)',                       desc:'Torre con espejo biselado satinado premium',                cat:'torre',    price:'$749.999', badge:'torre',  img:'img/torre-touch.jpg' },
+      { id:12, name:'Perfumero',                                        desc:'Organizador elegante para perfumes y accesorios',           cat:'perfumero', price:'$379.999', badge:'perf', img:'img/perfumero.jpg' },
+      { id:13, name:'Perfumero con luces',                              desc:'Perfumero iluminado, presentación de lujo',                 cat:'perfumero', price:'$449.999', badge:'perf', img:'img/perfumero-luces.jpg' },
+    ];
+
+    const badgeLabels = { '5c':'5 cajones', '9c':'9 cajones', 'torre':'Torre', 'perf':'Perfumero' };
+
+    const waIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L.057 23.882l6.19-1.624A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.36-.213-3.676.964.981-3.585-.234-.369A9.818 9.818 0 0 1 12 2.182c5.424 0 9.818 4.394 9.818 9.818s-4.394 9.818-9.818 9.818z"/></svg>`;
+
+    const placeholderSVG = `<div class="placeholder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span>Foto próximamente</span></div>`;
+
+    function waLink(p) {
+      const msg = encodeURIComponent(`Hola Edison, vi tu catálogo y me interesa el ${p.name} (${p.price}). ¿Está disponible?`);
+      return `https://wa.me/${WA}?text=${msg}`;
+    }
+
+    function render(list) {
+      document.getElementById('grid').innerHTML = list.map(p => `
+        <div class="product-card">
+          <div class="product-img">
+            <img src="${p.img}" alt="${p.name}" onerror="this.outerHTML='${placeholderSVG.replace(/'/g,"\\'")}'" loading="lazy">
+            <span class="product-badge badge-${p.badge}">${badgeLabels[p.badge]}</span>
+          </div>
+          <div class="product-info">
+            <p class="product-name">${p.name}</p>
+            <p class="product-desc">${p.desc}</p>
+            <div class="product-footer">
+              <span class="product-price">${p.price}</span>
+              <a class="wa-btn" href="${waLink(p)}" target="_blank">${waIcon} Pedir</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filter(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render(cat === 'todos' ? products : products.filter(p => p.cat === cat));
+    }
+
+    render(products);
+  </script>
+</body>
+</html>
