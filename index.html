@@ -314,6 +314,13 @@
       .puff-banner { margin: 0 1rem 1.5rem; }
     }
   </style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a1a1a">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/catalogo-de-muebles/sw.js');
+  }
+</script>  
 </head>
 <body>
 
