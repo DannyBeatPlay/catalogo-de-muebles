@@ -329,6 +329,25 @@
     .install-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 20px; background: white; color: #1a1a1a; border: none; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
     .install-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; opacity: 0.6; padding: 0 4px; flex-shrink: 0; }
 
+    .install-app-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 24px;
+      border-radius: 28px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      margin-top: 0.75rem;
+      text-decoration: none;
+    }
+    .install-app-btn svg { width: 18px; height: 18px; }
+    .install-app-btn.hidden { display: none; }
+
     @media (max-width: 480px) {
       .hero h1 { font-size: 26px; }
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 1rem 2rem; }
@@ -373,6 +392,10 @@
       <span class="pill">⭐ 5.0 · 19 reseñas</span>
       <span class="pill">✅ Vendedor verificado</span>
     </div>
+    <button class="install-app-btn" id="installAppBtnTop" style="margin-top:1.25rem;" onclick="installApp()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Instalar app Nova Home
+    </button>
   </div>
 
   <div class="filters-wrap">
@@ -503,6 +526,16 @@
     closeBtn.addEventListener('click', () => {
       banner.classList.remove('visible');
     });
+
+    function installApp() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+      } else {
+        alert('Para instalar: toca los 3 puntos de tu navegador → Agregar a pantalla de inicio');
+      }
+    }
+    document.getElementById('installAppBtn').addEventListener('click', installApp);
 
     window.addEventListener('appinstalled', () => {
       banner.classList.remove('visible');
