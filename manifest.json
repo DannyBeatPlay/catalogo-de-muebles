@@ -1,0 +1,14 @@
+{
+  "name": "Nova Home · Tocadores Hollywood",
+  "short_name": "Nova Home",
+  "description": "Catálogo de tocadores Hollywood en Bogotá. Envío gratis y puff de regalo.",
+  "start_url": "/catalogo-de-muebles/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a1a1a",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
