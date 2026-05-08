@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tocadores Hollywood | Edison Sanabria · Bogotá</title>
+  <title>Tocadores Hollywood | Nova Home · Bogotá</title>
   <meta name="description" content="Catálogo de tocadores Hollywood en Bogotá. Envío gratis, puff de obsequio. Vendedor verificado con 5 estrellas.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <meta property="og:title" content="Tocadores Hollywood · Bogotá">
+  <meta property="og:title" content="Tocadores Hollywood · Nova Home · Bogotá">
 <meta property="og:description" content="Catálogo completo con envío gratis a Bogotá y Soacha. ¡Puff de regalo con tu compra!">
 <meta property="og:image" content="https://edisonsanabria.github.io/catalogo-de-muebles/img/portada.jpg">
 <meta property="og:url" content="https://edisonsanabria.github.io/catalogo-de-muebles/">
@@ -305,6 +305,30 @@
       background: var(--bg);
     }
 
+    .install-banner {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1a1a1a;
+      color: white;
+      padding: 14px 20px;
+      z-index: 999;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    }
+    .install-banner.visible { display: flex; }
+    .install-banner-left { display: flex; align-items: center; gap: 12px; }
+    .install-banner-icon { width: 40px; height: 40px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .install-banner-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .install-banner-text h4 { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+    .install-banner-text p { font-size: 11px; opacity: 0.65; }
+    .install-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 20px; background: white; color: #1a1a1a; border: none; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .install-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; opacity: 0.6; padding: 0 4px; flex-shrink: 0; }
+
     @media (max-width: 480px) {
       .hero h1 { font-size: 26px; }
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 1rem 2rem; }
@@ -324,8 +348,20 @@
 </head>
 <body>
 
+  <div class="install-banner" id="installBanner">
+    <div class="install-banner-left">
+      <div class="install-banner-icon"><img src="img/icon-192.png" alt="Nova Home"></div>
+      <div class="install-banner-text">
+        <h4>Nova Home</h4>
+        <p>Instala el catálogo en tu celular</p>
+      </div>
+    </div>
+    <button class="install-btn" id="installBtn">Instalar</button>
+    <button class="install-close" id="installClose">✕</button>
+  </div>
+
   <div class="hero">
-    <span class="hero-badge">Bogotá, Colombia</span>
+    <span class="hero-badge">Nova Home · Bogotá, Colombia</span>
     <h1>Tocadores Hollywood</h1>
     <p>21 referencias disponibles &nbsp;·&nbsp; Envío gratis a Bogotá &nbsp;·&nbsp; Puff de obsequio</p>
     <div class="hero-pills">
@@ -370,7 +406,7 @@
   </div>
 
   <footer>
-    Edison Danilo Sanabria Riaño &nbsp;·&nbsp; Bogotá, Colombia &nbsp;·&nbsp;
+   Nova Home &nbsp;·&nbsp; Edison Danilo Sanabria Riaño &nbsp;·&nbsp; Bogotá, Colombia &nbsp;·&nbsp;
     <a href="https://wa.me/573205660764" style="color: #25D366; text-decoration: none;">WhatsApp</a>
   </footer>
 
@@ -446,6 +482,31 @@
     }
 
     render(products);
+
+    let deferredPrompt;
+    const banner = document.getElementById('installBanner');
+    const installBtn = document.getElementById('installBtn');
+    const closeBtn = document.getElementById('installClose');
+
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      setTimeout(() => banner.classList.add('visible'), 2000);
+    });
+
+    installBtn.addEventListener('click', () => {
+      banner.classList.remove('visible');
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      banner.classList.remove('visible');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      banner.classList.remove('visible');
+    });
   </script>
 </body>
 </html>
